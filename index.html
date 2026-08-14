@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bistro 24 — Хот-доги, Бургеры и Лаваши 24/7</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container header-container">
+      <a href="#" class="logo">
+        <div class="logo-icon">B24</div>
+        <div class="logo-text">
+          <span class="brand-title">Bistro <span>24</span></span>
+          <span class="brand-subtitle">EXPRESS DELIVERY</span>
+        </div>
+      </a>
+
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="searchInput" placeholder="Поиск блюд..." oninput="handleSearch()">
+      </div>
+
+      <div class="header-actions">
+        <a href="tel:+998901234567" class="phone-link">
+          <i class="fa-solid fa-phone"></i>
+          <span>+998 90 123 45 67</span>
+        </a>
+        <button class="cart-btn" onclick="toggleCart()">
+          <i class="fa-solid fa-basket-shopping"></i>
+          <span class="cart-btn-text">Корзина</span>
+          <span id="cartBadge" class="badge">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SLIDER SECTION -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="slider-wrapper">
+        <div class="slider" id="heroSlider">
+          <div class="slide active">
+            <img src="https://images.unsplash.com/photo-1619740455993-9e612b1af08a?auto=format&fit=crop&w=1200&q=80" alt="Сочные Хот-доги">
+            <div class="slide-overlay">
+              <div class="slide-content">
+                <span class="slide-tag">🔥 Легенда вкуса</span>
+                <h2>Сочные сочные Хот-доги</h2>
+                <p>Крафтовые сосиски, фирменные соусы и хрустящая булочка от 15 000 сум</p>
+                <button class="btn btn-primary" onclick="scrollToCategory('hotdogs')">Заказать сейчас</button>
+              </div>
+            </div>
+          </div>
+          <div class="slide">
+            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=80" alt="Сочные бургеры">
+            <div class="slide-overlay">
+              <div class="slide-content">
+                <span class="slide-tag">🍔 100% Mраморная говядина</span>
+                <h2>Двойные Блек-Бургеры</h2>
+                <p>Настоящее сочное мясо, тянущийся сыр Чеддер и золотистая булочка</p>
+                <button class="btn btn-primary" onclick="scrollToCategory('burgers')">Смотреть бургеры</button>
+              </div>
+            </div>
+          </div>
+          <div class="slide">
+            <img src="https://images.unsplash.com/photo-1561651823-34feb02250e4?auto=format&fit=crop&w=1200&q=80" alt="Свежие лаваши">
+            <div class="slide-overlay">
+              <div class="slide-content">
+                <span class="slide-tag">🌯 Горячий донер</span>
+                <h2>Восточные Лаваши 24/7</h2>
+                <p>Свежее мясо гриль, чипсы и фирменный томатный соус</p>
+                <button class="btn btn-primary" onclick="scrollToCategory('lavash')">Выбрать лаваш</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="slider-control prev" onclick="moveSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="slider-control next" onclick="moveSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
+
+        <div class="slider-dots" id="sliderDots">
+          <span class="dot active" onclick="goToSlide(0)"></span>
+          <span class="dot" onclick="goToSlide(1)"></span>
+          <span class="dot" onclick="goToSlide(2)"></span>
+        </div>
+      </div>
+
+      <div class="promo-banner">
+        <div class="promo-text">
+          <i class="fa-solid fa-gift promo-icon"></i>
+          <span>Закажи прямо сейчас с промокодом <strong class="code">BISTRO10</strong> и получи <strong class="discount">скидку 10%</strong>!</span>
+        </div>
+        <div class="promo-timer">
+          <i class="fa-solid fa-bolt"></i> Быстрая доставка за 30 мин
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CATALOG -->
+  <main class="main-content" id="catalog">
+    <div class="container">
+      <div class="categories-nav" id="categoryNav">
+        <button class="cat-btn active" onclick="filterCategory('all', this)">🔥 Все блюда</button>
+        <button class="cat-btn" onclick="filterCategory('hotdogs', this)">🌭 Хот-Доги</button>
+        <button class="cat-btn" onclick="filterCategory('burgers', this)">🍔 Бургеры</button>
+        <button class="cat-btn" onclick="filterCategory('lavash', this)">🌯 Лаваши</button>
+        <button class="cat-btn" onclick="filterCategory('combo', this)">🎁 Комбо наборы</button>
+        <button class="cat-btn" onclick="filterCategory('drinks', this)">🥤 Напитки & Фри</button>
+      </div>
+
+      <div class="catalog-header">
+        <h2 id="sectionTitle">Наше Меню</h2>
+        <span id="itemsCounter" class="items-count">0 позиций</span>
+      </div>
+
+      <div class="food-grid" id="foodGrid"></div>
+    </div>
+  </main>
+
+  <!-- CART DRAWER -->
+  <div class="cart-drawer-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <div class="cart-title">
+        <i class="fa-solid fa-basket-shopping"></i>
+        <h3>Ваш Заказ</h3>
+      </div>
+      <button class="close-btn" onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <div class="cart-body" id="cartItemsContainer"></div>
+
+    <div class="cart-footer">
+      <div class="promo-box">
+        <input type="text" id="promoInput" placeholder="Промокод (BISTRO10)">
+        <button onclick="applyPromo()">Применить</button>
+      </div>
+      <div id="promoNotice" class="promo-notice"></div>
+
+      <div class="summary-details">
+        <div class="summary-row"><span>Сумма:</span><span id="subtotalVal">0 сум</span></div>
+        <div class="summary-row discount-row hidden" id="discountRow"><span>Скидка (10%):</span><span id="discountVal">-0 сум</span></div>
+        <div class="summary-row"><span>Доставка:</span><span class="free-text">Бесплатно</span></div>
+        <div class="summary-row total-row"><span>Итого:</span><span id="totalVal" class="total-price">0 сум</span></div>
+      </div>
+
+      <button id="checkoutBtn" class="btn btn-primary btn-block" onclick="openModal()" disabled>
+        Оформить заказ <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- CHECKOUT MODAL -->
+  <div class="modal-overlay hidden" id="checkoutModal">
+    <div class="modal-card">
+      <button class="close-btn modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+      <h3 class="modal-title">Оформление заказа</h3>
+      <p class="modal-subtitle">Заполните данные для быстрой доставки</p>
+
+      <form id="orderForm" onsubmit="handleOrderSubmit(event)">
+        <div class="form-group"><label>Ваше имя</label><input type="text" required placeholder="Введите имя"></div>
+        <div class="form-group"><label>Номер телефона</label><input type="tel" required placeholder="+998 90 123 45 67" value="+998 "></div>
+        <div class="form-group"><label>Адрес доставки</label><input type="text" required placeholder="Улица, дом, квартира"></div>
+        <div class="form-group">
+          <label>Способ оплаты</label>
+          <select>
+            <option>Наличными курьеру</option>
+            <option>Click / Payme</option>
+            <option>Терминал (Uzcard/Humo)</option>
+          </select>
+        </div>
+
+        <div class="modal-footer">
+          <div><span class="modal-total-label">К оплате:</span><div id="modalTotal" class="modal-total-price">0 сум</div></div>
+          <button type="submit" class="btn btn-primary">Подтвердить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- SUCCESS MODAL -->
+  <div class="modal-overlay hidden" id="successModal">
+    <div class="modal-card text-center">
+      <div class="success-icon"><i class="fa-solid fa-check"></i></div>
+      <h3 class="modal-title">Заказ принят!</h3>
+      <p class="modal-subtitle" id="successText">Номер заказа #B24-108. Наш оператор свяжется с вами в течение 2 минут.</p>
+      <button class="btn btn-primary btn-block" onclick="closeSuccessModal()">Отлично!</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
